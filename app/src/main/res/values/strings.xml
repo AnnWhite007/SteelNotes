@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">SteelNotes</string>
+    <string name="header">Введите название</string>
+    <string name="exp">Описание</string>
+    <string name="saved">Запись сохранена</string>
+    <string name="unsaved">Пустая заметка. Выход без сохранения</string>
+    <string name="firstNoteHeader">Заметки на заметку...</string>
+    <string name="firstNoteExp">Описание программы</string>
+
+
+</resources>
