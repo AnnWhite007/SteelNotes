@@ -33,6 +33,7 @@
         app:backgroundTint="@color/button"
         app:layout_constraintBottom_toBottomOf="@+id/noteListView"
         app:layout_constraintEnd_toEndOf="@+id/noteListView"
+        app:maxImageSize="30dp"
         app:rippleColor="@color/white"
         app:srcCompat="@drawable/ic_add_note" />
 </androidx.constraintlayout.widget.ConstraintLayout>

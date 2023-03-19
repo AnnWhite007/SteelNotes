@@ -4,7 +4,6 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -13,6 +12,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -26,7 +27,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class EditActivity extends AppCompatActivity {
     private EditText edHeader, edExp;
     private ImageView imageView;
-    private final int PICK_IMAGE_CODE = 111;
     private ActivityResultLauncher<Intent> launcher;
     private String noteImUri = "empty";
     private boolean isEditState = true;
@@ -35,6 +35,7 @@ public class EditActivity extends AppCompatActivity {
     private ImageButton editImage;
     private NoteDbManager noteDbManager;
     private Note note;
+    private Animation animAlpha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class EditActivity extends AppCompatActivity {
                         }
                     }
                 });
+        animAlpha = AnimationUtils.loadAnimation(this, R.anim.alpha);
     }
 
     private void getIntents() {
@@ -73,6 +75,7 @@ public class EditActivity extends AppCompatActivity {
             note = (Note) intent.getSerializableExtra(NoteConstants.NOTE_INTENT);
             isEditState = intent.getBooleanExtra(NoteConstants.EDIT_STATE, true);
             if (!isEditState) {
+
                 edHeader.setText(note.getHeader());
                 edExp.setText(note.getExp());
                 if (!note.getUri().equals("empty")) {
@@ -86,37 +89,46 @@ public class EditActivity extends AppCompatActivity {
     }
 
     public void onClickSave(View view) {
+        view.startAnimation(animAlpha);
         String header = edHeader.getText().toString();
         String exp = edExp.getText().toString();
 
-        if (header.equals("")) {
+        if (header.equals("") && exp.equals("")) {
             Toast.makeText(this, R.string.unsaved, Toast.LENGTH_SHORT).show();
-            finish();
+
         } else {
+            if (header.equals("")) {
+                header = exp.length() < 20 ? exp + "..." : exp.substring(0, 20) + "...";
+            }
             if (isEditState) {
                 noteDbManager.insertToDb(header, noteImUri, exp);
                 Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
 
             } else {
                 noteDbManager.updateItemInDb(note.getId(), header, noteImUri, exp);
+                Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
             }
         }
         noteDbManager.closeDb();
         finish();
+        overridePendingTransition(R.anim.slidein, R.anim.slideout);
     }
 
     public void onClickAddImage(View view) {
+        view.startAnimation(animAlpha);
         imageContainer.setVisibility(View.VISIBLE);
         view.setVisibility(View.GONE);
     }
 
     public void onClickEditImage(View view) {
+        view.startAnimation(animAlpha);
         Intent editor = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         editor.setType("image/*");
         launcher.launch(editor);
     }
 
     public void onClickDeleteImage(View view) {
+        view.startAnimation(animAlpha);
         imageView.setImageResource(R.drawable.ic_defoult_image);
         noteImUri = "empty";
         imageContainer.setVisibility(View.GONE);

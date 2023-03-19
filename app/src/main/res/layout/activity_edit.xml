@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/back"
+    android:fitsSystemWindows="true"
     tools:context=".EditActivity">
 
     <EditText
@@ -15,13 +16,17 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@android:drawable/editbox_background"
+        android:cursorVisible="true"
         android:ems="10"
+        android:fontFamily="@font/lato_bold"
         android:hint="@string/header"
         android:inputType="textPersonName"
         android:padding="10dp"
+        android:saveEnabled="true"
+        android:textColor="@color/darkBack"
         android:textColorHint="@color/hints"
+        android:textIsSelectable="true"
         android:textSize="22dp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -79,12 +84,17 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:background="@android:drawable/editbox_background"
+        android:cursorVisible="true"
         android:ems="10"
+        android:fontFamily="@font/lato"
         android:gravity="top"
         android:hint="@string/exp"
         android:inputType="textMultiLine|textPersonName"
         android:padding="10dp"
+        android:saveEnabled="true"
+        android:textColor="@color/darkBack"
         android:textColorHint="@color/hints"
+        android:textIsSelectable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/editHeader"
         app:layout_constraintStart_toStartOf="@+id/editHeader"
@@ -99,26 +109,26 @@
         android:clickable="true"
         android:onClick="onClickSave"
         app:backgroundTint="@color/button"
+        app:iconTint="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/editExp"
         app:layout_constraintEnd_toEndOf="@+id/editExp"
-        app:srcCompat="@drawable/ic_save_note"
-        app:iconTint="@color/white"
-        />
+        app:maxImageSize="30dp"
+        app:srcCompat="@drawable/ic_save_note" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:clickable="true"
         android:onClick="onClickAddImage"
         app:backgroundTint="@color/white"
         app:fabSize="auto"
+        app:layout_constraintBottom_toTopOf="@+id/saveButton"
         app:layout_constraintEnd_toEndOf="@+id/saveButton"
-        app:layout_constraintTop_toTopOf="@+id/editExp"
-        app:maxImageSize="35dp"
-        app:rippleColor="@color/back"
-        app:srcCompat="@drawable/ic_add_photo" />
+        app:maxImageSize="30dp"
+        app:srcCompat="@drawable/ic_add_photo"
+        app:tint="@color/back" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

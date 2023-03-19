@@ -18,6 +18,7 @@ public class Note implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
     public String getHeader() {
         return header;
     }

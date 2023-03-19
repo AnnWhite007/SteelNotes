@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.babintseva.steelnotes.adapter.NotesAdapter;
 import com.babintseva.steelnotes.db.NoteDbManager;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private NoteDbManager noteDbManager;
     private RecyclerView noteListView;
     private NotesAdapter notesAdapter;
+    private Animation animAlpha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         noteListView.setLayoutManager(new LinearLayoutManager(this));
         getItemTouchHelper().attachToRecyclerView(noteListView);
         noteListView.setAdapter(notesAdapter);
+        animAlpha = AnimationUtils.loadAnimation(this, R.anim.alpha);
+
     }
 
     @Override
@@ -46,8 +50,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickAdd(View view) {
+        view.startAnimation(animAlpha);
         Intent intent = new Intent(MainActivity.this, EditActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.slidein, R.anim.slideout);
     }
 
     @Override

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,10 +47,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         return notesList.size();
     }
 
+
     static class NotesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvItemOfNote;
         private Context context;
         private List<Note> notesList;
+        private Animation animAlpha;
 
         public NotesViewHolder(@NonNull View itemView, Context context, List<Note> notesList) {
             super(itemView);
@@ -56,6 +60,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
             this.notesList = notesList;
             tvItemOfNote = itemView.findViewById(R.id.tvItemOfNote);
             itemView.setOnClickListener(this);
+            animAlpha = AnimationUtils.loadAnimation(context, R.anim.alpha);
         }
 
         public void setData(String header) {
@@ -64,6 +69,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
 
         @Override
         public void onClick(View view) {
+            view.startAnimation(animAlpha);
             Intent intent = new Intent(context, EditActivity.class);
             intent.putExtra(NoteConstants.NOTE_INTENT, notesList.get(getAdapterPosition()));
             intent.putExtra(NoteConstants.EDIT_STATE, false);
